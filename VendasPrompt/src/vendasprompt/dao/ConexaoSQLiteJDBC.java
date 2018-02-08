@@ -13,28 +13,22 @@ import java.sql.SQLException;
  *
  * @author Felipe
  */
-public class ConexaoSQLiteJDBC {
-
-    public static void connect() {
-        Connection conn = null;
-        try {
-
-            String url = "jdbc:sqlite:C:/db/chinook.db";
-
-            conn = DriverManager.getConnection(url);
-            
-            System.out.println("Connection to SQLite has been established.");
-            
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
+public abstract class ConexaoSQLiteJDBC {
+    private static final String URL_CONEXAO = "jdbc:sqlite:C:/db/chinook.db"; 
+    private Connection conexao = null;
+    
+    abstract public void criarTabelaBD();
+    
+    protected Connection getConnection() throws SQLException {
+       return DriverManager.getConnection(URL_CONEXAO); 
+    }
+  
+    protected void fechaConexao() {
+        if (conexao !=null) {
             try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
+                conexao.close();               
+            } catch (Exception e) {
+              }
+        }      
     }
 }

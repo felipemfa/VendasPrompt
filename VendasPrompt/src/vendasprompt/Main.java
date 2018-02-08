@@ -6,6 +6,7 @@
 package vendasprompt;
 
 import vendasprompt.dao.ConexaoSQLiteJDBC;
+import vendasprompt.visao.Prompt;
 
 /**
  *
@@ -17,8 +18,15 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ConexaoSQLiteJDBC teste = new ConexaoSQLiteJDBC();
-        teste.connect();
+        //ConexaoSQLiteJDBC teste = new ConexaoSQLiteJDBC();
+       // teste.connect();
+       Prompt prompt = new Prompt();
+       int opcaoMenu = -1;
+       do{
+           prompt.exibeMenu(opcaoMenu);
+           opcaoMenu = prompt.getOpcaoMenu();
+       }while(opcaoMenu !=0);
+  
     }
     
 }
