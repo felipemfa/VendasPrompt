@@ -8,6 +8,7 @@ package vendasprompt.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -16,19 +17,24 @@ import java.sql.SQLException;
 public abstract class ConexaoSQLiteJDBC {
     private static final String URL_CONEXAO = "jdbc:sqlite:C:/db/chinook.db"; 
     private Connection conexao = null;
+    private Statement statement;
     
     abstract public void criarTabelaBD();
     
-    protected Connection getConnection() throws SQLException {
-       return DriverManager.getConnection(URL_CONEXAO); 
+    protected Statement getstatement() throws SQLException {
+        statement = DriverManager.getConnection(URL_CONEXAO).createStatement();
+       return statement; 
     }
   
     protected void fechaConexao() {
-        if (conexao !=null) {
-            try {
-                conexao.close();               
-            } catch (Exception e) {
-              }
-        }      
+        try {          
+            if (statement != null) {
+                statement.close();
+            }
+            if (conexao !=null) {
+                    conexao.close();               
+            } 
+        } catch (SQLException e) {
+        }
     }
 }

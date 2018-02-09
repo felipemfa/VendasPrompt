@@ -5,8 +5,11 @@
  */
 package vendasprompt;
 
-import vendasprompt.dao.ConexaoSQLiteJDBC;
 import vendasprompt.visao.Prompt;
+import static vendasprompt.visao.Prompt.ADICIONA_ITEM;
+import static vendasprompt.visao.Prompt.LISTA_ITEM;
+import static vendasprompt.visao.Prompt.SAIR_MENU;
+import static vendasprompt.visao.Prompt.TOATAL_CARRINHO;
 
 /**
  *
@@ -23,8 +26,20 @@ public class Main {
        Prompt prompt = new Prompt();
        int opcaoMenu = -1;
        do{
-           prompt.exibeMenu(opcaoMenu);
-           opcaoMenu = prompt.getOpcaoMenu();
+           switch (opcaoMenu) {
+                case ADICIONA_ITEM:
+                    break;
+                case LISTA_ITEM:
+                    break;
+                case TOATAL_CARRINHO:
+                    break;
+                case SAIR_MENU:
+                    break;
+                default: {
+                    prompt.exibeMenuInicial();
+                    opcaoMenu = prompt.getOpcaoMenu();
+                }
+            }
        }while(opcaoMenu !=0);
   
     }

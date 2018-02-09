@@ -6,6 +6,7 @@
 package vendasprompt.visao;
 
 import java.io.Console;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -13,35 +14,35 @@ import java.util.Scanner;
  * @author marcos
  */
 public class Prompt {
-    public static final String[] OPCOES_MENU_INICIAL = {"Novo pedido","Cadastro de produtos","Listar pedidos"};
-    public static final int NOVO_PEDIDO = 1;
-    public static final int CADASTRAR_PRODUTO = 2;
-    public static final int LISTAR_PEDIDOS = -3;
+    public static final String[] OPCOES_MENU_INICIAL = {"Adicionar Item","Listar Itens","Total do carrinho"};
+    public static final int SAIR_MENU = 0;
+    public static final int ADICIONA_ITEM = 1;
+    public static final int LISTA_ITEM = 2;
+    public static final int TOATAL_CARRINHO = 3;
     
     
-    public void exibeMenu(int opcao){
-        switch (opcao) {
-            case NOVO_PEDIDO:
-                break;
-            case CADASTRAR_PRODUTO:
-                break;
-            case LISTAR_PEDIDOS:
-                break;
-            default:exibeMenuInicial();                
-        }
-    }
-    
-    private void exibeMenuInicial(){
+      
+    public void exibeMenuInicial(){
         System.out.println("MENU PRINCIPAL\n\n");
         for (int opcao = 1; opcao <= OPCOES_MENU_INICIAL.length; opcao++) {
             System.out.println(opcao+" - "+OPCOES_MENU_INICIAL[opcao-1]); 
         }
             System.out.println("0 - Sair"); 
-            System.out.println("\n\nDigite sua escolha:");
+            System.out.println("\n\n");
     }
     public int getOpcaoMenu(){
-        Scanner leitorPromt = new Scanner(System.in);
-        return leitorPromt.nextInt();   
+        Scanner leitorPromt = new Scanner(System.in);   
+        int opcaoSelecionada = -1 ;
+        do{
+            System.out.println("Digite sua escolha:");
+        try{
+            opcaoSelecionada =  leitorPromt.nextInt(); 
+        }catch (InputMismatchException ex) {
+            System.out.println("Digite um numero inteiro!");
+            leitorPromt.nextLine();
+        }
+        } while ((opcaoSelecionada < 0) || (opcaoSelecionada > OPCOES_MENU_INICIAL.length));
+        return opcaoSelecionada;
     }
     
    
