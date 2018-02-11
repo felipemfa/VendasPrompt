@@ -1,9 +1,16 @@
 package vendasprompt.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Carrinho{
     private List<Produto> produtos;
+
+    public Carrinho() {
+        produtos = new ArrayList<>();
+    }
+    
+    
 
     public List<Produto> getItens() {
         return produtos;
