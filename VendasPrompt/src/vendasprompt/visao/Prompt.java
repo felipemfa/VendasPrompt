@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vendasprompt.visao;
 
 import java.util.InputMismatchException;
@@ -10,27 +5,20 @@ import java.util.Scanner;
 import vendasprompt.modelo.Carrinho;
 import vendasprompt.modelo.Produto;
 
-/**
- *
- * @author marcos
- */
 public class Prompt implements ViewInterface{
-    public static final String[] OPCOES_MENU_INICIAL = {"Adicionar Item","Listar Itens","Total do carrinho"};
+    public static final String[] OPCOES_MENU_INICIAL = {"Adicionar Item","Listar Itens","Total do carrinho","Limpar carrinho"};
     public static final int SAIR_MENU = 0;
     public static final int ADICIONA_ITEM = 1;
     public static final int LISTA_ITEM = 2;
     public static final int TOTAL_CARRINHO = 3;
+    public static final int LIMPAR_CARRINHO = 4;
     Scanner leitorPromt;
 
     public Prompt() {
         leitorPromt = new Scanner(System.in);
     }
     
-    
-    
-    
-      
-    public void exibeMenuInicial(){
+    public void exibirMenuInicial(){
         System.out.println("MENU PRINCIPAL\n\n");
         for (int opcao = 1; opcao <= OPCOES_MENU_INICIAL.length; opcao++) {
             System.out.println(opcao+" - "+OPCOES_MENU_INICIAL[opcao-1]); 
@@ -38,6 +26,7 @@ public class Prompt implements ViewInterface{
             System.out.println("0 - Sair"); 
             System.out.println("\n\n");
     }
+    
     public int getOpcaoMenu(){
            
         int opcaoSelecionada = -1 ;
@@ -48,29 +37,29 @@ public class Prompt implements ViewInterface{
         }catch (InputMismatchException ex) {
             System.out.println("Digite um numero inteiro!");
             leitorPromt.nextLine();
-
         }
         } while ((opcaoSelecionada < 0) || (opcaoSelecionada > OPCOES_MENU_INICIAL.length));
         return opcaoSelecionada;
     }
     
-    public Produto cadastraProduto(){
+    public Produto inserirNovoProduto(){
         String descricaoProduto = "";
         Float precoProduto = 0f;
         do{
             System.out.println("Digite a descrição do produto (ou 'c' para cancelar a inclusão): ");
-            descricaoProduto = leitorPromt.next();
-            if (descricaoProduto.toUpperCase().equals("C")) {
+            leitorPromt.nextLine(); // garante que o prompt aguarde para inserir o texto.
+            descricaoProduto = leitorPromt.nextLine();
+            if (descricaoProduto.equalsIgnoreCase("C")) {
                return null;                
             }
             precoProduto = getPrecoProduto();
-            
         }while(descricaoProduto.equals(""));
         Produto produto = new Produto();
         produto.setDescricao(descricaoProduto);
         produto.setValor(precoProduto);
         return produto;
     }
+    
     private Float getPrecoProduto(){
         Float precoProduto = 0.0f;
         do{
@@ -81,33 +70,36 @@ public class Prompt implements ViewInterface{
                 System.out.println("Digite um valor válido!");
             }
         }while(Float.compare(precoProduto, 0.0f)<0);    
-        
-        System.out.println("teste "+precoProduto);
         return precoProduto;
     }
     
-    public void listCarrinho(Carrinho carrinho){
+    public void listarProdutosCarrinho(Carrinho carrinho){
         System.out.println("Descrição | Valor");
         for (Produto produto : carrinho.getItens()) {      
             System.out.printf("%s | R$ %f\n", produto.getDescricao(), produto.getValor());
         }
-        aguardaQualquerTecla();
+        aguardarQualquerTecla();
     }
     
-    public void imprimeTotalCarrinho(Float total){
+    public void imprimirValorTotalCarrinho(Float total){
         System.out.printf("Total do carrinho é R$ %f \n\n\n",total);;
-        aguardaQualquerTecla();
+        aguardarQualquerTecla();
     }
     
+    public boolean confirmarLimpezaCarrinho() {
+       String resposta;
+       do{
+           System.out.println("Gostaria de limpar o carrinho? S / N ");
+           resposta = leitorPromt.next();
+       }while((!resposta.equalsIgnoreCase("S")) && (!resposta.equalsIgnoreCase("N")));
+       return resposta.equalsIgnoreCase("S");
+    }
     
-    private void aguardaQualquerTecla(){
-        System.out.println("Aperte qualquer tecla para retornar");
+    private void aguardarQualquerTecla(){
+        System.out.println("Aperte enter para retornar");
         leitorPromt.nextLine();//intercepta o "enter" anterior
-        leitorPromt.nextLine();//aguarda qualquer tecla para prosseguir
+        leitorPromt.nextLine();//aguarda "enter" para prosseguir
     }
-    
-   
-    
 }
 
 

@@ -5,10 +5,11 @@ import vendasprompt.modelo.Produto;
 
 public interface ViewInterface {
     
-    public void exibeMenuInicial();
+    public void exibirMenuInicial();
     public int getOpcaoMenu();
-    public Produto cadastraProduto();
-    public void listCarrinho(Carrinho carrinho);
-    public void imprimeTotalCarrinho(Float total);
+    public Produto inserirNovoProduto();
+    public void listarProdutosCarrinho(Carrinho carrinho);
+    public void imprimirValorTotalCarrinho(Float total);
+    public boolean confirmarLimpezaCarrinho();
     
 }
